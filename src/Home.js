@@ -2,7 +2,7 @@ import useFetch from './useFetch';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=240444&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
+    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=166027&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
 
     const [schoolData, setSchoolData] = useState(null); 
     
@@ -30,6 +30,10 @@ const Home = () => {
                     schoolData.latest.student.demographics.race_ethnicity[item] && <p key={i}>{i + 1} {item}: {schoolData.latest.student.demographics.race_ethnicity[item]}</p>
                 ))}
                 <h3>***Graph of Choice Data***</h3>
+                <p>Admission rate: {schoolData.latest.admissions.admission_rate.overall}</p>
+                <p>SAT Scores:</p>
+                <p>Math: {schoolData.latest.admissions.sat_scores['25th_percentile'].math} - {schoolData.latest.admissions.sat_scores['75th_percentile'].math}</p>
+                <p>Critical Reading: {schoolData.latest.admissions.sat_scores['25th_percentile'].critical_reading} - {schoolData.latest.admissions.sat_scores['75th_percentile'].critical_reading}</p>
             </div>}
             <button>Save as PDF</button>
             <button>Save as JSON</button>
