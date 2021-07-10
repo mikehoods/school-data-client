@@ -4,7 +4,7 @@ import Race_Ethnicity from './graphs/Race_Ethnicity'
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=240444&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
+    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=166027&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
 
     const [name, setName] = useState(null);
     const [alias, setAlias] = useState(null);
@@ -54,10 +54,11 @@ const Home = () => {
                     <p>Critical Reading: {sat['25th_percentile'].critical_reading} - {sat['75th_percentile'].critical_reading}</p>
                 </div>}
             </div>}
-
-            <button>Save as PDF</button>
-            <button>Save as JSON</button>
-            <button>Print Page</button>
+            <div className='button-div'>
+                <button>Save as PDF</button>
+                <button>Save as JSON</button>
+                <button>Print Page</button>
+            </div>   
         </div>
         
      );
