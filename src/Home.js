@@ -1,5 +1,6 @@
 import useFetch from './useFetch';
 import Programs from './graphs/Programs'
+import Race_Ethnicity from './graphs/Race_Ethnicity'
 import { useState, useEffect } from 'react';
 
 const Home = () => {
@@ -13,7 +14,7 @@ const Home = () => {
     const [zip, setZip] = useState(null);
     const [students, setStudents] = useState(null);
     const [programs, setPrograms] = useState(null);
-    const [ethnicity, setEthnicity] = useState(null);
+    const [raceEthnicity, setRaceEthnicity] = useState(null);
     const [admissions, setAdmissions] = useState(null);
     const [sat, setSat] = useState(null);
 
@@ -27,7 +28,7 @@ const Home = () => {
             setZip(data.school.zip)
             setStudents(data.latest.student.size)
             setPrograms(data.latest.academics.program_percentage)
-            setEthnicity(data.latest.student.demographics.race_ethnicity)
+            setRaceEthnicity(data.latest.student.demographics.race_ethnicity)
             setAdmissions(data.latest.admissions.admission_rate.overall)
             setSat(data.latest.admissions.sat_scores)
         }
@@ -44,10 +45,7 @@ const Home = () => {
 
                 <Programs programs={programs}/>
 
-                <p>Race Ethnicity:</p>
-                {ethnicity &&  Object.keys(ethnicity).map((item, i) => (
-                    ethnicity[item] && <p key={i}>{item}: {ethnicity[item]}</p>
-                ))}
+                <Race_Ethnicity raceEthnicity={raceEthnicity} />
 
                 <p>Admission rate: {admissions * 100}%</p>
                 <p>SAT Scores:</p>
