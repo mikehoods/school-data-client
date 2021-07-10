@@ -9,15 +9,25 @@ const Programs = ({ programs }) => {
         if (programs) {
             //define donut graph dimensions, arcPath, and color scheme
             const dims = { height: 300, width: 300, radius: 150 };
-            const cent = { x: (dims.width / 2 + 5), y: (dims.height /2 + 5)};
+            const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5)};
 
             const svg = d3.select('.program-canvas')
+                .append('div')
+                .attr('class', 'svg-container')
                 .append('svg')
-                .attr('width', dims.width + 550)
-                .attr('height', dims.height + 300);
+                .attr('preserveAspectRatio', 'xMinYMin meet')
+                .attr('viewBox', '0 0 600 700')
+                .attr('class', 'svg-content-responsive')
+            
+            svg.append('text')
+                .attr('x', 70)
+                .attr('y', 80)
+                .attr('class', 'programs-title')
+                .text('Program Percentage');
+
 
             const graph = svg.append('g')
-                .attr('transform', `translate(${cent.x}, ${cent.y})`);
+                .attr('transform', `translate(${cent.x}, ${cent.y + 100})`);
 
             const pie = d3.pie()
                 .sort(null)
@@ -51,6 +61,8 @@ const Programs = ({ programs }) => {
             //format programs object and values for d3 rendering
             const programData = [];
             Object.keys(programs).forEach(key => programData.push({name: key.replaceAll('_', ' '), percentage: (programs[key]* 100).toFixed(2)}));
+
+            //filter programs with 0% and sort alphabetically
             const existingPrograms = programData.filter(program => program.percentage > 0).sort((a,b) => (Object.values(a)[0] > Object.values(b)[0]) - 0.5);
 
             //set color scale domain
@@ -72,7 +84,7 @@ const Programs = ({ programs }) => {
                 .attr('stroke-width', 1)
                 .attr('fill', d => color(d.data.name));
     
-            //events
+            //setup events
             graph.selectAll('path')
                 .on('mouseover', (e, d) => {
                     tip.show(d, e.currentTarget);
@@ -88,6 +100,7 @@ const Programs = ({ programs }) => {
     //set color scheme for graph
     const color = d3.scaleOrdinal(d3['schemeSet3'])
     
+    //handle events
     const handleMouseOver = (e) => {
         d3.select(e.currentTarget)
             .transition('changeSliceFill').duration(300)
@@ -103,7 +116,6 @@ const Programs = ({ programs }) => {
     return (   
         <div>
             {programs && <div className="program-canvas">
-                <h3>Program Percentage</h3>
             </div>}
         </div>
         
