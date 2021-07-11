@@ -1,11 +1,12 @@
 import useFetch from './useFetch';
+import Loading from './Loading';
 import Programs from './graphs/Programs';
 import Race_Ethnicity from './graphs/Race_Ethnicity';
 import Demographics from './graphs/Demographics';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=186131&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
+    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=240444&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
 
     const [name, setName] = useState(null);
     const [alias, setAlias] = useState(null);
@@ -42,8 +43,14 @@ const Home = () => {
         window.print()
     }
 
-    const handleJSON = () => {
-        localStorage.setItem('schoolData', JSON.stringify(demographics))
+    const handleJSON = (demographics, filename) => {
+        const fileData = JSON.stringify(demographics);
+        const blob = new Blob([fileData], {type: 'text/plain'});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `${filename}.json`;
+        link.href = url;
+        link.click();
         
     }
 
@@ -53,7 +60,9 @@ const Home = () => {
     
     return (
         <div className="wrapper">
-            {data && <div className="main-div">
+            { error && {error} }
+            { isLoading && <Loading /> }
+            { data && <div className="main-div">
                 <h1>{name}</h1>
                 { alias && <h2>{alias}</h2> }
                 <h3>{city}, {state} {zip}</h3>
@@ -67,12 +76,12 @@ const Home = () => {
 
                 { demographics && <Demographics demographics={demographics} /> }
 
-            </div>}
-            <div className='button-div'>
-                <button onClick={handlePDF}>Save as PDF</button>
-                <button href="data:JSON.stringify(demographics)" filename="schoolData" download>Download JSON</button>
-                <button onClick={handlePrint}>Print Page</button>
-            </div>   
+                <div className='button-div'>
+                    <button onClick={handlePDF}>Save as PDF</button>
+                    <button onClick={handleJSON}>Download JSON</button>
+                    <button onClick={handlePrint}>Print Page</button>
+                </div>
+            </div>}   
         </div>
         
      );

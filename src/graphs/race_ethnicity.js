@@ -80,7 +80,7 @@ const RaceEthnicity = ({ raceEthnicity }) => {
                 .attr('class', 'arc')
                 .attr('d', arcPath)
                 .attr('stroke', '#fff')
-                .attr('stroke-width', 1)
+                .attr('stroke-width', 2)
                 .attr('fill', d => color(d.data.name));
     
             //setup events

@@ -78,12 +78,12 @@ const Programs = ({ programs }) => {
                 .data(pie(existingPrograms))
 
             paths.enter()
-            .append('path')
-                .attr('class', 'arc')
-                .attr('d', arcPath)
-                .attr('stroke', '#fff')
-                .attr('stroke-width', 1)
-                .attr('fill', d => color(d.data.name));
+                .append('path')
+                    .attr('class', 'arc')
+                    .attr('d', arcPath)
+                    .attr('stroke', '#fff')
+                    .attr('stroke-width', 2)
+                    .attr('fill', d => color(d.data.name));
     
             //setup events
             graph.selectAll('path')

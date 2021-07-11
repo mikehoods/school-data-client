@@ -11,7 +11,7 @@ const Demographics = ({ demographics }) => {
                 .attr('class', 'svg-container demographics-container')
                 .append('svg')
                 .attr('preserveAspectRatio', 'xMinYMin meet')
-                .attr('viewBox', '0 0 600 300')
+                .attr('viewBox', '0 0 600 350')
                 .attr('class', 'svg-content-responsive')
                 
             //svg title
@@ -22,7 +22,7 @@ const Demographics = ({ demographics }) => {
                 .text('Demographics');
             
             //set margins and dimensions
-            const margin = {top: 20, right: 20, bottom: 80, left: 100};
+            const margin = {top: 20, right: 40, bottom: 80, left: 100};
             const graphWidth = 600 - margin.left - margin.right
             const graphHeight = 300 - margin.top - margin.bottom
 
