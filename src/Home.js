@@ -1,10 +1,11 @@
 import useFetch from './useFetch';
-import Programs from './graphs/Programs'
-import Race_Ethnicity from './graphs/Race_Ethnicity'
+import Programs from './graphs/Programs';
+import Race_Ethnicity from './graphs/Race_Ethnicity';
+import Demographics from './graphs/Demographics';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=166027&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
+    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=240444&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
 
     const [name, setName] = useState(null);
     const [alias, setAlias] = useState(null);
@@ -15,8 +16,7 @@ const Home = () => {
     const [students, setStudents] = useState(null);
     const [programs, setPrograms] = useState(null);
     const [raceEthnicity, setRaceEthnicity] = useState(null);
-    const [admissions, setAdmissions] = useState(null);
-    const [sat, setSat] = useState(null);
+    const [demographics, setDemographics] = useState(null);
 
     useEffect(() => {
         if (data) {
@@ -29,8 +29,12 @@ const Home = () => {
             setStudents(data.latest.student.size)
             setPrograms(data.latest.academics.program_percentage)
             setRaceEthnicity(data.latest.student.demographics.race_ethnicity)
-            setAdmissions(data.latest.admissions.admission_rate.overall)
-            setSat(data.latest.admissions.sat_scores)
+            //restructured for d3 graphing
+            setDemographics([
+                                { 'name': 'men', 'percentage': data.latest.student.demographics.men },
+                                { 'name': 'women', 'percentage': data.latest.student.demographics.women },
+                                { 'name': 'first generation', 'percentage': data.latest.student.demographics.first_generation }
+                            ])
         }
     }, [data])
     
@@ -43,16 +47,12 @@ const Home = () => {
                 <h3>{city}, {state} {zip}</h3>
                 <p>Total No. of Students: {students}</p>
 
-                <Programs programs={programs}/>
+                <Programs programs={programs} />
 
                 <Race_Ethnicity raceEthnicity={raceEthnicity} />
 
-                <p>Admission rate: {admissions * 100}%</p>
-                <p>SAT Scores:</p>
-                {sat && <div>
-                    <p>Math: {sat['25th_percentile'].math} - {sat['75th_percentile'].math}</p>
-                    <p>Critical Reading: {sat['25th_percentile'].critical_reading} - {sat['75th_percentile'].critical_reading}</p>
-                </div>}
+                <Demographics demographics={demographics} />
+
             </div>}
             <div className='button-div'>
                 <button>Save as PDF</button>

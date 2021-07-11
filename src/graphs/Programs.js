@@ -7,10 +7,11 @@ const Programs = ({ programs }) => {
 
     useEffect(() => {
         if (programs) {
-            //define donut graph dimensions, arcPath, and color scheme
+            //define donut graph dimensions
             const dims = { height: 300, width: 300, radius: 150 };
             const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5)};
 
+            //append responsive svg
             const svg = d3.select('.program-canvas')
                 .append('div')
                 .attr('class', 'svg-container')
@@ -19,6 +20,7 @@ const Programs = ({ programs }) => {
                 .attr('viewBox', '0 0 600 700')
                 .attr('class', 'svg-content-responsive')
             
+            //graph title
             svg.append('text')
                 .attr('x', 70)
                 .attr('y', 80)

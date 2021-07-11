@@ -19,7 +19,7 @@ svg text{
   font-size: 14px;
   text-transform: capitalize;
 }
-.programs-title{
+.programs-title, .sat-title{
   font-size: 20px;
 }
 
