@@ -5,7 +5,7 @@ import Demographics from './graphs/Demographics';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=240444&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
+    const { data, isLoading, error } = useFetch('https://api.data.gov/ed/collegescorecard/v1/schools/?school.operating=1&id=186131&api_key=297S7932ybwihdF333i2X9RqrCYSABid2X3YqwpF')
 
     const [name, setName] = useState(null);
     const [alias, setAlias] = useState(null);
@@ -37,27 +37,41 @@ const Home = () => {
                             ])
         }
     }, [data])
+
+    const handlePDF = () => {
+        window.print()
+    }
+
+    const handleJSON = () => {
+        localStorage.setItem('schoolData', JSON.stringify(demographics))
+        
+    }
+
+    const handlePrint = () => {
+        window.print()
+    }
     
     return (
         <div className="wrapper">
             {data && <div className="main-div">
                 <h1>{name}</h1>
-                {alias && <h2>{alias}</h2>}
-                <h3>{website}</h3>
+                { alias && <h2>{alias}</h2> }
                 <h3>{city}, {state} {zip}</h3>
+                <a href={'https://' + website} target='_blank'>{website}</a>
+                
                 <p>Total No. of Students: {students}</p>
 
-                <Programs programs={programs} />
+                { programs && <Programs programs={programs} /> }
 
-                <Race_Ethnicity raceEthnicity={raceEthnicity} />
+                { raceEthnicity && <Race_Ethnicity raceEthnicity={raceEthnicity} /> }
 
-                <Demographics demographics={demographics} />
+                { demographics && <Demographics demographics={demographics} /> }
 
             </div>}
             <div className='button-div'>
-                <button>Save as PDF</button>
-                <button>Save as JSON</button>
-                <button>Print Page</button>
+                <button onClick={handlePDF}>Save as PDF</button>
+                <button href="data:JSON.stringify(demographics)" filename="schoolData" download>Download JSON</button>
+                <button onClick={handlePrint}>Print Page</button>
             </div>   
         </div>
         

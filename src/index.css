@@ -16,21 +16,32 @@ svg text{
   background-color: antiquewhite;
   padding: 4px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: capitalize;
 }
-.programs-title, .sat-title{
+.graph-title{
   font-size: 20px;
 }
 
 .svg-container {
   display: inline-block;
   position: relative;
-  width: 100%;
-  padding-bottom: 100%; /* aspect ratio */
   vertical-align: top;
   overflow: hidden;
 }
+.program-container{
+  width: 90%;
+  padding-bottom: 90%;  /* aspect ratio */
+}
+.raceEthnicity-container{
+  width: 90%;
+  padding-bottom: 55%;  /* aspect ratio */
+}
+.demographics-container{
+  width: 90%;
+  padding-bottom: 50%;  /* aspect ratio */
+}
+
 .svg-content-responsive {
   display: inline-block;
   position: absolute;
@@ -48,13 +59,13 @@ button{
   text-transform: lowercase;
   display: inline-block;
   border: 1px solid #fff;
-  background-color: #004545;
+  background-color: #1f5ca5;
   color: #fff;
   margin: 10px;
   padding: 8px;
   border-radius: 12px;
 }
 button:hover{
-  color: #004545;
+  color: #1f5ca5;
   background-color: #fff;
 }

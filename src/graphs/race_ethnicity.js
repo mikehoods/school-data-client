@@ -6,28 +6,27 @@ import { useEffect } from 'react';
 const RaceEthnicity = ({ raceEthnicity }) => {
 
     useEffect(() => {
-        if (raceEthnicity) {
             //define donut graph dimensions, arcPath, and color scheme
             const dims = { height: 300, width: 300, radius: 150 };
             const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5)};
 
             const svg = d3.select('.raceEthnicity-canvas')
                 .append('div')
-                .attr('class', 'svg-container')
+                .attr('class', 'svg-container raceEthnicity-container')
                 .append('svg')
                 .attr('preserveAspectRatio', 'xMinYMin meet')
-                .attr('viewBox', '0 0 600 425')
+                .attr('viewBox', '0 0 600 350')
                 .attr('class', 'svg-content-responsive')
             
             svg.append('text')
-                .attr('x', 70)
-                .attr('y', 80)
-                .attr('class', 'programs-title')
+                .attr('x', 90)
+                .attr('y', 25)
+                .attr('class', 'graph-title')
                 .text('Race / Ethnicity');
 
 
             const graph = svg.append('g')
-                .attr('transform', `translate(${cent.x}, ${cent.y + 100})`);
+                .attr('transform', `translate(${cent.x}, ${cent.y + 40})`);
 
             const pie = d3.pie()
                 .sort(null)
@@ -94,11 +93,10 @@ const RaceEthnicity = ({ raceEthnicity }) => {
                     tip.hide();
                     handleMouseOut(e);
                 })
-        }
-    }, [raceEthnicity])
+    }, [])
 
     //set color scheme for graph
-    const color = d3.scaleOrdinal(d3['schemeSet3'])
+    const color = d3.scaleOrdinal(d3['schemePaired'])
     
     //handle events
     const handleMouseOver = (e) => {

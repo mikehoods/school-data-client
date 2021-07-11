@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 import * as d3 from 'd3';
+import { tip as d3tip } from 'd3-v6-tip';
  
 const Demographics = ({ demographics }) => {
 
     useEffect(() => {
-        if (demographics) {
-
             //append responsive svg
             const svg = d3.select('.demographics-canvas')
                 .append('div')
-                .attr('class', 'svg-container')
+                .attr('class', 'svg-container demographics-container')
                 .append('svg')
                 .attr('preserveAspectRatio', 'xMinYMin meet')
                 .attr('viewBox', '0 0 600 300')
@@ -17,9 +16,9 @@ const Demographics = ({ demographics }) => {
                 
             //svg title
             svg.append('text')
-                .attr('x', 275)
-                .attr('y', 20)
-                .attr('class', 'demographics-title')
+                .attr('x', 250)
+                .attr('y', 25)
+                .attr('class', 'graph-title')
                 .text('Demographics');
             
             //set margins and dimensions
@@ -43,6 +42,17 @@ const Demographics = ({ demographics }) => {
                 .attr('width', graphWidth)
                 .attr('height', graphHeight)
                 .attr('transform', `translate(${margin.left}, ${margin.top})`)
+            
+            //setup tool tip
+            const tip = d3tip()
+                .attr('class', 'tip-div')
+                .html(d => {
+                    let content = `<div className="tip-name">${d.name}</div>`;
+                    content += `<div className="tip-percentage">${(d.percentage * 100).toFixed(2)}%</div>`;
+                    return content
+                })
+            
+            graph.call(tip);
 
             //append axes
             const xAxisGroup = graph.append('g')
@@ -58,7 +68,7 @@ const Demographics = ({ demographics }) => {
                 
             rects.attr('width', d => x(d.percentage * 100))
                 .attr('height', y.bandwidth)
-                .attr('fill', 'green')
+                .attr('fill', '#0da49f')
                 .attr('y', d => y(d.name))
 
             //append the enter selection to the DOM
@@ -66,7 +76,7 @@ const Demographics = ({ demographics }) => {
                 .append('rect')
                     .attr('width', d => x(d.percentage * 100))
                     .attr('height', y.bandwidth)
-                    .attr('fill', 'green')
+                    .attr('fill', '#0da49f')
                     .attr('y', d => y(d.name))
 
             //create and call the axes
@@ -77,10 +87,31 @@ const Demographics = ({ demographics }) => {
             xAxisGroup.call(xAxis);
             yAxisGroup.call(yAxis);
 
-            yAxisGroup.selectAll('text')
-                .attr('fill', 'green');
-        }
-    }, [demographics])
+            //setup events
+            graph.selectAll('rect')
+                .on('mouseover', (e, d) => {
+                    tip.show(d, e.currentTarget);
+                    handleMouseOver(e);
+                    console.log(d)
+                })
+                .on('mouseout', (e, d) => {
+                    tip.hide();
+                    handleMouseOut(e);
+                })
+    }, [])
+
+    //handle events
+    const handleMouseOver = (e) => {
+        d3.select(e.currentTarget)
+            .transition('changeRectFill').duration(300)
+                .attr('fill', '#1f5ca5')
+    }
+
+    const handleMouseOut = (e) => {
+        d3.select(e.currentTarget)
+            .transition('changeRectFill').duration(300)
+                .attr('fill', '#0da49f')
+    }
 
     return ( 
         <div className="demographics-canvas">

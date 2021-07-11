@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 const Programs = ({ programs }) => {
 
     useEffect(() => {
-        if (programs) {
             //define donut graph dimensions
             const dims = { height: 300, width: 300, radius: 150 };
             const cent = { x: (dims.width / 2 + 5), y: (dims.height / 2 + 5)};
@@ -14,22 +13,22 @@ const Programs = ({ programs }) => {
             //append responsive svg
             const svg = d3.select('.program-canvas')
                 .append('div')
-                .attr('class', 'svg-container')
+                .attr('class', 'svg-container program-container')
                 .append('svg')
                 .attr('preserveAspectRatio', 'xMinYMin meet')
-                .attr('viewBox', '0 0 600 700')
+                .attr('viewBox', '0 0 600 600')
                 .attr('class', 'svg-content-responsive')
             
             //graph title
             svg.append('text')
                 .attr('x', 70)
-                .attr('y', 80)
-                .attr('class', 'programs-title')
+                .attr('y', 25)
+                .attr('class', 'graph-title')
                 .text('Program Percentage');
 
 
             const graph = svg.append('g')
-                .attr('transform', `translate(${cent.x}, ${cent.y + 100})`);
+                .attr('transform', `translate(${cent.x}, ${cent.y + 40})`);
 
             const pie = d3.pie()
                 .sort(null)
@@ -96,11 +95,10 @@ const Programs = ({ programs }) => {
                     tip.hide();
                     handleMouseOut(e);
                 })
-        }
-    }, [programs])
+    }, [])
 
     //set color scheme for graph
-    const color = d3.scaleOrdinal(d3['schemeSet3'])
+    const color = d3.scaleOrdinal(d3['schemePaired'])
     
     //handle events
     const handleMouseOver = (e) => {
