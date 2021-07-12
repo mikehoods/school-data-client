@@ -50,8 +50,7 @@ const Home = () => {
         const link = document.createElement('a');
         link.download = `${filename}.json`;
         link.href = url;
-        link.click();
-        
+        link.click();  
     }
 
     const handlePrint = () => {
@@ -77,8 +76,8 @@ const Home = () => {
                 { demographics && <Demographics demographics={demographics} /> }
 
                 <div className='button-div'>
-                    <button onClick={handlePDF}>Save as PDF</button>
-                    <button onClick={handleJSON}>Download JSON</button>
+                    <button onClick={(handlePDF)}>Save as PDF</button>
+                    <button onClick={() => handleJSON({ name, alias, website, city, state, zip, students,   programs,raceEthnicity, demographics }, 'schoolData')}>Download JSON</button>
                     <button onClick={handlePrint}>Print Page</button>
                 </div>
             </div>}   
