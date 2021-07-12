@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 //Custom hook to fetch API data
 const useFetch = (url) => {
     const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -18,7 +18,6 @@ const useFetch = (url) => {
                 setData(...data.results)
                 setIsLoading(false)
                 setError(null)
-                console.log(data)
             })
             .catch(err => {
                 setIsLoading(false)
