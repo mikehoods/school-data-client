@@ -1,8 +1,8 @@
-#School Data App
+# School Data App
 
 This application pulls and displays data from the College Scorecard API. 
 
-##Installation and Setup
+## Installation and Setup
 
 Installation:
 
@@ -12,12 +12,12 @@ Start Server:
 
 ```npm run start```
 
-##Usage
+## Usage
 
 <img src="./public/homeScreen.png" alt="home" width="250"/>
 
-##Contributing
+## Contributing
 Pull requests are welcome.
 
-##License
+## License
 MIT &copy; Michael Hood
