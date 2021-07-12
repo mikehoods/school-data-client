@@ -14,7 +14,7 @@ Start Server:
 
 ##Usage
 
-![Home Screen](homeScreen.png)
+<img src="./public/homeScreen.png" alt="home" width="250"/>
 
 ##Contributing
 Pull requests are welcome.
